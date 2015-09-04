@@ -20,6 +20,15 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-
+    // MARK: - IBOutlet Properties
+    
+    @IBOutlet weak var displayLabel: UILabel!
+    
+    // MARK: - IBAction Properties
+    
+    @IBAction func appendDigitButton(sender: UIButton) {
+    }
+    
+    
 }
 
