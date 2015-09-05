@@ -147,7 +147,7 @@
                                 <animations/>
                                 <state key="normal" title="."/>
                                 <connections>
-                                    <action selector="appendDigitButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="uNL-Al-tGV"/>
+                                    <action selector="appendFloatingPointButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kyW-eH-cHc"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Uq-Bb-jaf">
