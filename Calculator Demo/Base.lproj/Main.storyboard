@@ -52,6 +52,9 @@
                                 <rect key="frame" x="359" y="75" width="103" height="123"/>
                                 <animations/>
                                 <state key="normal" title="×"/>
+                                <connections>
+                                    <action selector="performMathOperationButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ugr-D4-v2l"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uOA-SV-rBZ">
                                 <rect key="frame" x="470" y="75" width="102" height="123"/>
@@ -86,6 +89,9 @@
                                 <rect key="frame" x="359" y="206" width="103" height="124"/>
                                 <animations/>
                                 <state key="normal" title="÷"/>
+                                <connections>
+                                    <action selector="performMathOperationButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="J6S-Wl-dUX"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fe9-3Y-zYn">
                                 <rect key="frame" x="470" y="206" width="102" height="124"/>
@@ -120,11 +126,17 @@
                                 <rect key="frame" x="359" y="338" width="103" height="123"/>
                                 <animations/>
                                 <state key="normal" title="+"/>
+                                <connections>
+                                    <action selector="performMathOperationButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="pzQ-Sb-W8v"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JQr-sy-D4f">
                                 <rect key="frame" x="470" y="338" width="102" height="123"/>
                                 <animations/>
-                                <state key="normal" title="Button"/>
+                                <state key="normal" title="√"/>
+                                <connections>
+                                    <action selector="performMathOperationButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="pDY-wl-XKH"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="grn-Ju-chk">
                                 <rect key="frame" x="28" y="469" width="102" height="123"/>
@@ -154,11 +166,17 @@
                                 <rect key="frame" x="359" y="469" width="103" height="123"/>
                                 <animations/>
                                 <state key="normal" title="−"/>
+                                <connections>
+                                    <action selector="performMathOperationButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="49b-VK-V2q"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sQj-Kc-ZCG">
                                 <rect key="frame" x="470" y="469" width="102" height="123"/>
                                 <animations/>
                                 <state key="normal" title="⏎"/>
+                                <connections>
+                                    <action selector="enterButton" destination="BYZ-38-t0r" eventType="touchUpInside" id="9BX-nz-jUp"/>
+                                </connections>
                             </button>
                         </subviews>
                         <animations/>
@@ -263,7 +281,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="448" y="437"/>
+            <point key="canvasLocation" x="395" y="453"/>
         </scene>
     </scenes>
 </document>

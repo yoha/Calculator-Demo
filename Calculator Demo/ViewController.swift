@@ -23,6 +23,19 @@ class ViewController: UIViewController {
     // MARK: - Stored Properties
     
     var isUserInTheMiddleOfTyping = false
+    var operandStack = [Double]()
+    
+    // MARK: - Computed Properties
+    
+    var displayValue: Double {
+        get {
+            return NSNumberFormatter().numberFromString(self.displayLabel.text!)!.doubleValue
+        }
+        set {
+            self.displayLabel.text = "\(newValue)"
+            self.isUserInTheMiddleOfTyping = false
+        }
+    }
 
     // MARK: - IBOutlet Properties
     
@@ -76,5 +89,39 @@ class ViewController: UIViewController {
         self.floatingPointButton.enabled = true
     }
     
+    @IBAction func enterButton() {
+        self.operandStack.append(self.displayValue)
+        print(self.operandStack)
+        self.floatingPointButton.enabled = true
+        self.isUserInTheMiddleOfTyping = false
+    }
+    
+    @IBAction func performMathOperationButton(sender: UIButton) {
+        if self.isUserInTheMiddleOfTyping { self.enterButton() }
+        let mathOperator = sender.currentTitle!
+        switch mathOperator {
+            case "×": self.calculateOperands({ (op1: Double, op2: Double) -> Double in return op2 * op1 })
+            case "÷": self.calculateOperands({ (op1, op2) in op2 / op1 })
+            case "+": self.calculateOperands({ $1 + $0 })
+            case "−": self.calculateOperands() { $1 - $0 }
+            case "√": self.calculateOperands { sqrt($0) }
+            default: break
+        }
+    }
+    
+    // MARK: - Local Methods
+    
+    func calculateOperands(operation: (op1: Double, op2: Double) -> Double) {
+        guard self.operandStack.count >= 2 else { return }
+        self.displayValue = operation(op1: self.operandStack.removeLast(), op2: self.operandStack.removeLast())
+        self.enterButton()
+    }
+    
+    @nonobjc // obj-c doesn't allow method overloading & this class inherits from UIViewController, which is an obj-c file despite writing it in swift.
+    func calculateOperands(operation: (op1: Double) -> Double) {
+        guard self.operandStack.count >= 1 else { return }
+        self.displayValue = operation(op1: self.operandStack.removeLast())
+        self.enterButton()
+    }
 }
 
