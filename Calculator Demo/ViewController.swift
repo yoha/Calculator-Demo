@@ -12,7 +12,8 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        self.floatingPointButton.enabled = false
     }
 
     override func didReceiveMemoryWarning() {
@@ -71,28 +72,25 @@ class ViewController: UIViewController {
         else {
             self.displayLabel.text = sender.currentTitle!
             self.isUserInTheMiddleOfTyping = true
+            self.floatingPointButton.enabled = true
         }
     }
     
     @IBAction func appendFloatingPointButton(sender: UIButton) {
-        if self.displayLabel.text!.characters.contains(".") { return }
-        else {
-            self.displayLabel.text!.append("." as Character)
-            self.floatingPointButton.enabled = false
-            self.isUserInTheMiddleOfTyping = true
-        }
+        self.displayLabel.text!.append("." as Character)
+        self.floatingPointButton.enabled = false
     }
     
     @IBAction func clearDisplayButton(sender: UIButton) {
         self.displayLabel.text = "0"
         self.isUserInTheMiddleOfTyping = false
-        self.floatingPointButton.enabled = true
+        self.floatingPointButton.enabled = false
     }
     
     @IBAction func enterButton() {
         self.operandStack.append(self.displayValue)
         print(self.operandStack)
-        self.floatingPointButton.enabled = true
+        self.floatingPointButton.enabled = false
         self.isUserInTheMiddleOfTyping = false
     }
     
