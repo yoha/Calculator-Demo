@@ -14,6 +14,10 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         self.floatingPointButton.enabled = false
+        
+        self.customNumberFormatter = NSNumberFormatter()
+        self.customNumberFormatter.minimumFractionDigits = 0
+        self.customNumberFormatter.maximumFractionDigits = 10
     }
 
     override func didReceiveMemoryWarning() {
@@ -26,6 +30,8 @@ class ViewController: UIViewController {
     var isUserInTheMiddleOfTyping = false
     var operandStack = [Double]()
     
+    var customNumberFormatter: NSNumberFormatter!
+    
     // MARK: - Computed Properties
     
     var displayValue: Double {
@@ -33,7 +39,7 @@ class ViewController: UIViewController {
             return NSNumberFormatter().numberFromString(self.displayLabel.text!)!.doubleValue
         }
         set {
-            self.displayLabel.text = "\(newValue)"
+            self.displayLabel.text = self.customNumberFormatter.stringFromNumber(NSNumber(double: newValue))
             self.isUserInTheMiddleOfTyping = false
         }
     }

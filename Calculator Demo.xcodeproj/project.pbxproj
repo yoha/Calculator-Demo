@@ -90,6 +90,7 @@
 		65693BF61B9945DA00AB97FF /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0710;
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Yohannes Wijaya";
 				TargetAttributes = {
@@ -285,6 +286,7 @@
 				65693C121B9945DB00AB97FF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
