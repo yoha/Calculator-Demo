@@ -28,18 +28,22 @@ class ViewController: UIViewController {
     // MARK: - Stored Properties
     
     var isUserInTheMiddleOfTyping = false
-    var operandStack = [Double]()
+    var calculatorModel = CalculatorModel()
     
     var customNumberFormatter: NSNumberFormatter!
     
     // MARK: - Computed Properties
     
-    var displayValue: Double {
+    var displayValue: Double? {
         get {
-            return NSNumberFormatter().numberFromString(self.displayLabel.text!)!.doubleValue
+            return NSNumberFormatter().numberFromString(self.displayLabel.text!)!.doubleValue ?? nil
         }
         set {
-            self.displayLabel.text = self.customNumberFormatter.stringFromNumber(NSNumber(double: newValue))
+            guard newValue != nil else {
+                self.displayLabel.text = "0"
+                return
+            }
+            self.displayLabel.text = self.customNumberFormatter.stringFromNumber(NSNumber(double: newValue!))
             self.isUserInTheMiddleOfTyping = false
         }
     }
@@ -88,44 +92,27 @@ class ViewController: UIViewController {
     }
     
     @IBAction func clearDisplayButton(sender: UIButton) {
-        self.displayLabel.text = "0"
+        self.displayValue = nil
+//        self.displayLabel.text = "0"
         self.isUserInTheMiddleOfTyping = false
         self.floatingPointButton.enabled = false
     }
     
     @IBAction func enterButton() {
-        self.operandStack.append(self.displayValue)
-        print(self.operandStack)
         self.floatingPointButton.enabled = false
         self.isUserInTheMiddleOfTyping = false
+        if let evaluationResult = self.calculatorModel.pushOperand(self.displayValue!) {
+            self.displayValue = evaluationResult
+        }
     }
     
     @IBAction func performMathOperationButton(sender: UIButton) {
         if self.isUserInTheMiddleOfTyping { self.enterButton() }
-        let mathOperator = sender.currentTitle!
-        switch mathOperator {
-            case "×": self.calculateOperands({ (op1: Double, op2: Double) -> Double in return op2 * op1 })
-            case "÷": self.calculateOperands({ (op1, op2) in op2 / op1 })
-            case "+": self.calculateOperands({ $1 + $0 })
-            case "−": self.calculateOperands() { $1 - $0 }
-            case "√": self.calculateOperands { sqrt($0) }
-            default: break
+        if let mathOperator = sender.currentTitle {
+            if let evaluationResult = self.calculatorModel.pushOperator(mathOperator) {
+                self.displayValue = evaluationResult
+            }
         }
-    }
-    
-    // MARK: - Local Methods
-    
-    func calculateOperands(operation: (op1: Double, op2: Double) -> Double) {
-        guard self.operandStack.count >= 2 else { return }
-        self.displayValue = operation(op1: self.operandStack.removeLast(), op2: self.operandStack.removeLast())
-        self.enterButton()
-    }
-    
-    @nonobjc // obj-c doesn't allow method overloading & this class inherits from UIViewController, which is an obj-c file despite writing it in swift.
-    func calculateOperands(operation: (op1: Double) -> Double) {
-        guard self.operandStack.count >= 1 else { return }
-        self.displayValue = operation(op1: self.operandStack.removeLast())
-        self.enterButton()
     }
 }
 
