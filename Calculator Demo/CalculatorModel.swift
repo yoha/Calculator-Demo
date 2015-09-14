@@ -10,10 +10,20 @@ import Foundation
 
 class CalculatorModel {
     
-    private enum Op {
+    private enum Op: CustomStringConvertible {
         case Operand(Double)
         case UnaryOperation(String, Double -> Double)
         case BinaryOperation(String, (Double, Double) -> Double)
+        
+        var description: String {
+            get {
+                switch self {
+                    case .Operand(let operandValue): return "\(operandValue)"
+                    case .UnaryOperation(let operatorSymbol, _): return operatorSymbol
+                    case .BinaryOperation(let operatorSymbol, _): return operatorSymbol
+                }
+            }
+        }
     }
     
     // MARK: - Stored Properties
@@ -35,6 +45,9 @@ class CalculatorModel {
     
     private func evaluateMembersOfTheStackRecursively(var opsInStack: [Op]) -> (evaluationResult: Double?, remainingOpsInStack: [Op]) {
         if !self.operandOrOperatorStack.isEmpty {
+            guard opsInStack.count >= 1 else {
+                return (nil, opsInStack)
+            }
             let opAtTheTopOfTheStack = opsInStack.removeLast()
             
             switch opAtTheTopOfTheStack {
@@ -62,7 +75,8 @@ class CalculatorModel {
     // MARK: Public Methods
     
     func performEvaluation() -> Double? {
-        let (evaluationResult, _) = self.evaluateMembersOfTheStackRecursively(self.operandOrOperatorStack)
+        let (evaluationResult, remainingOpsInStack) = self.evaluateMembersOfTheStackRecursively(self.operandOrOperatorStack)
+        print("\(self.operandOrOperatorStack) = \(evaluationResult) with \(remainingOpsInStack) remaining")
         return evaluationResult
     }
     
