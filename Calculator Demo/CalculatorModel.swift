@@ -34,20 +34,26 @@ class CalculatorModel {
     // MARK: - Public Initializer
     
     init() {
-        self.availableMathOperators["×"] = Op.BinaryOperation("×", { (operand1: Double, operand2: Double) -> Double in return operand2 * operand1 })
-        self.availableMathOperators["÷"] = Op.BinaryOperation("÷", { (operand1, operand2) -> Double in operand2 / operand1 })
-        self.availableMathOperators["+"] = Op.BinaryOperation("+", +)
-        self.availableMathOperators["−"] = Op.BinaryOperation("−") { $1 - $0 }
-        self.availableMathOperators["√"] = Op.UnaryOperation("√", sqrt)
+        func mathOperation(op: Op) {
+            self.availableMathOperators[op.description] = op
+        }
+        mathOperation(Op.BinaryOperation("×", { (operand1: Double, operand2: Double) -> Double in return operand2 * operand1 }))
+        mathOperation(Op.BinaryOperation("÷", { (operand1, operand2) -> Double in operand2 / operand1 }))
+        mathOperation(Op.BinaryOperation("+", +))
+        mathOperation(Op.BinaryOperation("−") { $1 - $0 })
+        mathOperation(Op.UnaryOperation("√", sqrt))
+        
+//        self.availableMathOperators["×"] = Op.BinaryOperation("×", { (operand1: Double, operand2: Double) -> Double in return operand2 * operand1 })
+//        self.availableMathOperators["÷"] = Op.BinaryOperation("÷", { (operand1, operand2) -> Double in operand2 / operand1 })
+//        self.availableMathOperators["+"] = Op.BinaryOperation("+", +)
+//        self.availableMathOperators["−"] = Op.BinaryOperation("−") { $1 - $0 }
+//        self.availableMathOperators["√"] = Op.UnaryOperation("√", sqrt)
     }
     
     // MARK: - Private Methods
     
     private func evaluateMembersOfTheStackRecursively(var opsInStack: [Op]) -> (evaluationResult: Double?, remainingOpsInStack: [Op]) {
-        if !self.operandOrOperatorStack.isEmpty {
-            guard opsInStack.count >= 1 else {
-                return (nil, opsInStack)
-            }
+        if opsInStack.count >= 1 {
             let opAtTheTopOfTheStack = opsInStack.removeLast()
             
             switch opAtTheTopOfTheStack {

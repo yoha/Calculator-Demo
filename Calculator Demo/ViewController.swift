@@ -93,7 +93,6 @@ class ViewController: UIViewController {
     
     @IBAction func clearDisplayButton(sender: UIButton) {
         self.displayValue = nil
-//        self.displayLabel.text = "0"
         self.isUserInTheMiddleOfTyping = false
         self.floatingPointButton.enabled = false
     }
