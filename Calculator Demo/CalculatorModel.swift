@@ -19,8 +19,8 @@ class CalculatorModel {
             get {
                 switch self {
                     case .Operand(let operandValue): return "\(operandValue)"
-                    case .UnaryOperation(let operatorSymbol, _): return operatorSymbol
-                    case .BinaryOperation(let operatorSymbol, _): return operatorSymbol
+                    case .UnaryOperation(let mathOperatorSymbol, _): return mathOperatorSymbol
+                    case .BinaryOperation(let mathOperatorSymbol, _): return mathOperatorSymbol
                 }
             }
         }
@@ -61,15 +61,15 @@ class CalculatorModel {
                 return (anOperand, opsInStack)
             case .UnaryOperation(_, let operation):
                 let opToBeEvaluated = self.evaluateMembersOfTheStackRecursively(opsInStack)
-                if let op = opToBeEvaluated.evaluationResult {
-                    return (operation(op), opToBeEvaluated.remainingOpsInStack)
+                if let operand = opToBeEvaluated.evaluationResult {
+                    return (operation(operand), opToBeEvaluated.remainingOpsInStack)
                 }
             case .BinaryOperation(_, let operation):
                 let op1ToBeEvaluated = self.evaluateMembersOfTheStackRecursively(opsInStack)
-                if let op1 = op1ToBeEvaluated.evaluationResult {
+                if let operand1 = op1ToBeEvaluated.evaluationResult {
                     let op2ToBeEvaluated = self.evaluateMembersOfTheStackRecursively(op1ToBeEvaluated.remainingOpsInStack)
-                    if let op2 = op2ToBeEvaluated.evaluationResult {
-                        return (operation(op1, op2), op2ToBeEvaluated.remainingOpsInStack)
+                    if let operand2 = op2ToBeEvaluated.evaluationResult {
+                        return (operation(operand1, operand2), op2ToBeEvaluated.remainingOpsInStack)
                     }
                 }
             }
@@ -87,13 +87,13 @@ class CalculatorModel {
     }
     
     func pushOperand(operand: Double) -> Double? {
-        operandOrOperatorStack.append(Op.Operand(operand))
+        self.operandOrOperatorStack.append(Op.Operand(operand))
         return self.performEvaluation()
     }
     
     func pushOperator(mathSymbol: String) -> Double? {
-        if let mathOperator = self.availableMathOperators[mathSymbol] {
-            self.operandOrOperatorStack.append(mathOperator)
+        if let mathOperation = self.availableMathOperators[mathSymbol] {
+            self.operandOrOperatorStack.append(mathOperation)
         }
         return self.performEvaluation()
     }
