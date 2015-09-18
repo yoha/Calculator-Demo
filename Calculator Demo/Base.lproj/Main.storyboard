@@ -59,7 +59,10 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uOA-SV-rBZ">
                                 <rect key="frame" x="470" y="203" width="102" height="91"/>
                                 <animations/>
-                                <state key="normal" title="Button"/>
+                                <state key="normal" title="π"/>
+                                <connections>
+                                    <action selector="performMathOperationButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="zbA-Mf-Akw"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CnJ-z1-rH5">
                                 <rect key="frame" x="28" y="302" width="102" height="92"/>
@@ -96,7 +99,10 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fe9-3Y-zYn">
                                 <rect key="frame" x="470" y="302" width="102" height="92"/>
                                 <animations/>
-                                <state key="normal" title="Button"/>
+                                <state key="normal" title="√"/>
+                                <connections>
+                                    <action selector="performMathOperationButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="iKQ-Go-oIc"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nxh-GF-UsF">
                                 <rect key="frame" x="28" y="402" width="102" height="91"/>
@@ -133,10 +139,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JQr-sy-D4f">
                                 <rect key="frame" x="470" y="402" width="102" height="91"/>
                                 <animations/>
-                                <state key="normal" title="√"/>
-                                <connections>
-                                    <action selector="performMathOperationButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="pDY-wl-XKH"/>
-                                </connections>
+                                <state key="normal" title="delete"/>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="grn-Ju-chk">
                                 <rect key="frame" x="28" y="501" width="102" height="91"/>
@@ -190,7 +193,7 @@
                                 <animations/>
                                 <state key="normal" title="sin"/>
                                 <connections>
-                                    <action selector="appendDigitButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ZSF-jQ-i0p"/>
+                                    <action selector="performMathOperationButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="LDe-L2-7Ia"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5iH-oR-YEm">
@@ -198,7 +201,7 @@
                                 <animations/>
                                 <state key="normal" title="cos"/>
                                 <connections>
-                                    <action selector="appendDigitButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lU3-Mj-gcE"/>
+                                    <action selector="performMathOperationButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="WLa-Am-WiL"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LY7-HP-W0h">
@@ -206,16 +209,13 @@
                                 <animations/>
                                 <state key="normal" title="tan"/>
                                 <connections>
-                                    <action selector="appendDigitButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="XnR-YF-AhC"/>
+                                    <action selector="performMathOperationButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Kqh-cd-wf0"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="njf-YE-iv7">
                                 <rect key="frame" x="359" y="104" width="103" height="91"/>
                                 <animations/>
                                 <state key="normal" title="B"/>
-                                <connections>
-                                    <action selector="performMathOperationButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Xwp-rN-Mny"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1LI-KA-OeW">
                                 <rect key="frame" x="470" y="104" width="102" height="91"/>

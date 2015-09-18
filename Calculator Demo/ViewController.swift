@@ -58,10 +58,7 @@ class ViewController: UIViewController {
     @IBAction func appendDigitButton(sender: UIButton) {
         if isUserInTheMiddleOfTyping {
             if self.displayLabel.text!.characters.first == "0" {
-                if sender.currentTitle == "0" && self.displayLabel.text!.characters.contains(".") {
-                    self.displayLabel.text! += sender.currentTitle!
-                }
-                else if self.displayLabel.text!.characters.contains(".") {
+                if sender.currentTitle == "0" && self.displayLabel.text!.characters.contains(".") || self.displayLabel.text!.characters.contains("."){
                     self.displayLabel.text! += sender.currentTitle!
                 }
                 else if sender.currentTitle! == "0" {

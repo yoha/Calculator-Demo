@@ -16,12 +16,10 @@ class CalculatorModel {
         case BinaryOperation(String, (Double, Double) -> Double)
         
         var description: String {
-            get {
-                switch self {
-                    case .Operand(let operandValue): return "\(operandValue)"
-                    case .UnaryOperation(let mathOperatorSymbol, _): return mathOperatorSymbol
-                    case .BinaryOperation(let mathOperatorSymbol, _): return mathOperatorSymbol
-                }
+            switch self {
+                case .Operand(let operandValue): return "\(operandValue)"
+                case .UnaryOperation(let mathOperatorSymbol, _): return mathOperatorSymbol
+                case .BinaryOperation(let mathOperatorSymbol, _): return mathOperatorSymbol
             }
         }
     }
@@ -34,20 +32,15 @@ class CalculatorModel {
     // MARK: - Public Initializer
     
     init() {
-        func mathOperation(op: Op) {
-            self.availableMathOperators[op.description] = op
-        }
-        mathOperation(Op.BinaryOperation("×", { (operand1: Double, operand2: Double) -> Double in return operand2 * operand1 }))
-        mathOperation(Op.BinaryOperation("÷", { (operand1, operand2) -> Double in operand2 / operand1 }))
-        mathOperation(Op.BinaryOperation("+", +))
-        mathOperation(Op.BinaryOperation("−") { $1 - $0 })
-        mathOperation(Op.UnaryOperation("√", sqrt))
-        
-//        self.availableMathOperators["×"] = Op.BinaryOperation("×", { (operand1: Double, operand2: Double) -> Double in return operand2 * operand1 })
-//        self.availableMathOperators["÷"] = Op.BinaryOperation("÷", { (operand1, operand2) -> Double in operand2 / operand1 })
-//        self.availableMathOperators["+"] = Op.BinaryOperation("+", +)
-//        self.availableMathOperators["−"] = Op.BinaryOperation("−") { $1 - $0 }
-//        self.availableMathOperators["√"] = Op.UnaryOperation("√", sqrt)
+        self.availableMathOperators["×"] = Op.BinaryOperation("×", { (operand1: Double, operand2: Double) -> Double in return operand2 * operand1 })
+        self.availableMathOperators["÷"] = Op.BinaryOperation("÷", { (operand1, operand2) -> Double in operand2 / operand1 })
+        self.availableMathOperators["+"] = Op.BinaryOperation("+", +)
+        self.availableMathOperators["−"] = Op.BinaryOperation("−") {$1 - $0}
+        self.availableMathOperators["√"] = Op.UnaryOperation("√", sqrt)
+        self.availableMathOperators["sin"] = Op.UnaryOperation("sin", sin)
+        self.availableMathOperators["cos"] = Op.UnaryOperation("cos", cos)
+        self.availableMathOperators["tan"] = Op.UnaryOperation("tan", tan)
+//        self.availableMathOperators["π"] = Op.UnaryOperation("π") {$0 * M_PI}
     }
     
     // MARK: - Private Methods
