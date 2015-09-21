@@ -13,6 +13,13 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.tapGestureToNotifyDeepCleanOnce = UITapGestureRecognizer(target: self, action: "alertAboutDeepCleanOnce")
+        self.clearButton.addGestureRecognizer(tapGestureToNotifyDeepCleanOnce)
+        
+        let longGestureToDeepCleanDisplayAndOpsStack = UILongPressGestureRecognizer(target: self, action: "deepCleanDisplayAndOpsStack:")
+        longGestureToDeepCleanDisplayAndOpsStack.minimumPressDuration = 1.0
+        self.clearButton.addGestureRecognizer(longGestureToDeepCleanDisplayAndOpsStack)
+        
         self.floatingPointButton.enabled = false
         
         self.customNumberFormatter = NSNumberFormatter()
@@ -27,8 +34,11 @@ class ViewController: UIViewController {
     
     // MARK: - Stored Properties
     
-    var isUserInTheMiddleOfTyping = false
     var calculatorModel = CalculatorModel()
+    
+    var isUserInTheMiddleOfTyping = false
+    
+    var tapGestureToNotifyDeepCleanOnce: UITapGestureRecognizer!
     
     var customNumberFormatter: NSNumberFormatter!
     
@@ -52,6 +62,7 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var displayLabel: UILabel!
     @IBOutlet weak var floatingPointButton: UIButton!
+    @IBOutlet weak var clearButton: UIButton!
     
     // MARK: - IBAction Properties
     
@@ -108,6 +119,28 @@ class ViewController: UIViewController {
             if let evaluationResult = self.calculatorModel.pushOperator(mathOperator) {
                 self.displayValue = evaluationResult
             }
+        }
+    }
+    
+    // MARK: - Local Methods
+    
+    func alertAboutDeepCleanOnce() {
+        let alertController = UIAlertController(title: "Tip:", message: "Tap & hold C to erase display & memory.", preferredStyle: UIAlertControllerStyle.Alert)
+        alertController.addAction(UIAlertAction(title: "I got it", style: UIAlertActionStyle.Default, handler: nil))
+        self.presentViewController(alertController, animated: true) { [unowned self] () -> Void in
+            self.clearButton.removeGestureRecognizer(self.tapGestureToNotifyDeepCleanOnce)
+        }
+    }
+    
+    func deepCleanDisplayAndOpsStack(longPressGesture: UILongPressGestureRecognizer) {
+        if longPressGesture.state == UIGestureRecognizerState.Began {
+            let alertController = UIAlertController(title: "Erase display & memory?", message: nil, preferredStyle: .Alert)
+            alertController.addAction(UIAlertAction(title: "Erase!", style: .Default, handler: { [unowned self] (alertAction) -> Void in
+                self.displayValue = nil
+                self.calculatorModel.eraseOpsStack()
+            }))
+            alertController.addAction(UIAlertAction(title: "Don't erase!", style: .Cancel, handler: nil))
+            self.presentViewController(alertController, animated: true, completion: nil)
         }
     }
 }

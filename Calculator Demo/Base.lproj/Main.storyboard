@@ -343,6 +343,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="clearButton" destination="grn-Ju-chk" id="ldV-rM-0qy"/>
                         <outlet property="displayLabel" destination="HEB-q5-TlA" id="Deo-cW-dwR"/>
                         <outlet property="floatingPointButton" destination="RIU-SF-kc4" id="wHn-cd-v6x"/>
                     </connections>

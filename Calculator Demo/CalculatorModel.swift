@@ -12,12 +12,14 @@ class CalculatorModel {
     
     private enum Op: CustomStringConvertible {
         case Operand(Double)
-        case UnaryOperation(String, Double -> Double)
+        case NullaryOperation(String, () -> Double)
+        case UnaryOperation(String, (Double) -> Double)
         case BinaryOperation(String, (Double, Double) -> Double)
         
         var description: String {
             switch self {
                 case .Operand(let operandValue): return "\(operandValue)"
+                case .NullaryOperation(let mathOperatorSymbol, _): return mathOperatorSymbol
                 case .UnaryOperation(let mathOperatorSymbol, _): return mathOperatorSymbol
                 case .BinaryOperation(let mathOperatorSymbol, _): return mathOperatorSymbol
             }
@@ -40,7 +42,7 @@ class CalculatorModel {
         self.availableMathOperators["sin"] = Op.UnaryOperation("sin", sin)
         self.availableMathOperators["cos"] = Op.UnaryOperation("cos", cos)
         self.availableMathOperators["tan"] = Op.UnaryOperation("tan", tan)
-//        self.availableMathOperators["π"] = Op.UnaryOperation("π") {$0 * M_PI}
+        self.availableMathOperators["π"] = Op.NullaryOperation("π") {M_PI}
     }
     
     // MARK: - Private Methods
@@ -52,6 +54,8 @@ class CalculatorModel {
             switch opAtTheTopOfTheStack {
             case .Operand(let anOperand):
                 return (anOperand, opsInStack)
+            case .NullaryOperation(_, let operation):
+                return (operation(), opsInStack)
             case .UnaryOperation(_, let operation):
                 let opToBeEvaluated = self.evaluateMembersOfTheStackRecursively(opsInStack)
                 if let operand = opToBeEvaluated.evaluationResult {
@@ -72,6 +76,11 @@ class CalculatorModel {
     
     
     // MARK: Public Methods
+    
+    func eraseOpsStack() {
+        self.operandOrOperatorStack = []
+        print(self.operandOrOperatorStack)
+    }
     
     func performEvaluation() -> Double? {
         let (evaluationResult, remainingOpsInStack) = self.evaluateMembersOfTheStackRecursively(self.operandOrOperatorStack)
