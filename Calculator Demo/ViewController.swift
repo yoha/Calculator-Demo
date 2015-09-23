@@ -5,7 +5,7 @@
 //  Created by Yohannes Wijaya on 9/4/15.
 //  Copyright © 2015 Yohannes Wijaya. All rights reserved.
 //
-// last work: line 161
+// to fix: the pie operation for the history label
 
 import UIKit
 
@@ -110,6 +110,15 @@ class ViewController: UIViewController {
         self.floatingPointButton.enabled = false
     }
     
+    @IBAction func deleteButton(sender: UIButton) {
+        guard self.displayLabel.text!.characters.count > 1 else {
+            self.displayValue = nil
+            self.isUserInTheMiddleOfTyping = false
+            return
+        }
+        self.displayLabel.text = String(self.displayLabel.text!.characters.dropLast())
+    }
+    
     @IBAction func enterButton() {
         self.floatingPointButton.enabled = false
         self.isUserInTheMiddleOfTyping = false
@@ -158,10 +167,17 @@ class ViewController: UIViewController {
 
         switch mathOperatorButton.currentTitle! {
             case "+", "−", "×", "÷":
-                guard index >= 2 else { return }
+                guard index >= 2 else { break }
                 self.displayHistoryLabel.text! += self.operandHistory[index - 3] + mathOperatorButton.currentTitle! + self.operandHistory[index - 2] + "=" + "\(self.customNumberFormatter.stringFromNumber(self.displayValue!)!), "
-            default:
+            case "sin", "cos", "tan", "√":
                 self.displayHistoryLabel.text! += mathOperatorButton.currentTitle! + self.operandHistory[index - 2] + "=" + "\(self.customNumberFormatter.stringFromNumber(self.displayValue!)!), "
+            case "π":
+                guard index > 1 else {
+                    self.displayHistoryLabel.text! += mathOperatorButton.currentTitle!
+                    break
+                }
+                self.displayHistoryLabel.text! += mathOperatorButton.currentTitle! + "x" + self.operandHistory[index - 2] + "=" + "\(self.customNumberFormatter.stringFromNumber(self.displayValue!)!), "
+            default: break
         }
         self.operandHistory = []
     }

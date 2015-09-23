@@ -140,6 +140,9 @@
                                 <rect key="frame" x="470" y="402" width="102" height="91"/>
                                 <animations/>
                                 <state key="normal" title="delete"/>
+                                <connections>
+                                    <action selector="deleteButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bIr-Y2-TEG"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="grn-Ju-chk">
                                 <rect key="frame" x="28" y="501" width="102" height="91"/>
