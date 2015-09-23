@@ -181,5 +181,10 @@ class ViewController: UIViewController {
         }
         self.operandHistory = []
     }
+    
+    @IBAction func inversePolarity(sender: UIButton) {
+        guard self.displayValue != 0 else { return }
+        self.displayValue! -= self.displayValue! * 2
+    }
 }
 
