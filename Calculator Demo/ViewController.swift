@@ -5,6 +5,7 @@
 //  Created by Yohannes Wijaya on 9/4/15.
 //  Copyright © 2015 Yohannes Wijaya. All rights reserved.
 //
+// last work: line 161
 
 import UIKit
 
@@ -24,7 +25,7 @@ class ViewController: UIViewController {
         
         self.customNumberFormatter = NSNumberFormatter()
         self.customNumberFormatter.minimumFractionDigits = 0
-        self.customNumberFormatter.maximumFractionDigits = 10
+        self.customNumberFormatter.maximumFractionDigits = 3
     }
 
     override func didReceiveMemoryWarning() {
@@ -42,6 +43,8 @@ class ViewController: UIViewController {
     
     var customNumberFormatter: NSNumberFormatter!
     
+    var operandHistory = [String]()
+    
     // MARK: - Computed Properties
     
     var displayValue: Double? {
@@ -54,6 +57,7 @@ class ViewController: UIViewController {
                 return
             }
             self.displayLabel.text = self.customNumberFormatter.stringFromNumber(NSNumber(double: newValue!))
+            self.operandHistory.append(self.displayLabel.text!)
             self.isUserInTheMiddleOfTyping = false
         }
     }
@@ -63,6 +67,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var displayLabel: UILabel!
     @IBOutlet weak var floatingPointButton: UIButton!
     @IBOutlet weak var clearButton: UIButton!
+    @IBOutlet weak var displayHistoryLabel: UILabel!
     
     // MARK: - IBAction Properties
     
@@ -119,7 +124,9 @@ class ViewController: UIViewController {
             if let evaluationResult = self.calculatorModel.pushOperator(mathOperator) {
                 self.displayValue = evaluationResult
             }
+            self.evalOperationForHistory(sender)
         }
+        
     }
     
     // MARK: - Local Methods
@@ -137,11 +144,26 @@ class ViewController: UIViewController {
             let alertController = UIAlertController(title: "Erase display & memory?", message: nil, preferredStyle: .Alert)
             alertController.addAction(UIAlertAction(title: "Erase!", style: .Default, handler: { [unowned self] (alertAction) -> Void in
                 self.displayValue = nil
+                self.displayHistoryLabel.text = ""
                 self.calculatorModel.eraseOpsStack()
             }))
             alertController.addAction(UIAlertAction(title: "Don't erase!", style: .Cancel, handler: nil))
             self.presentViewController(alertController, animated: true, completion: nil)
         }
+    }
+    
+    func evalOperationForHistory(mathOperatorButton: UIButton) {
+        guard self.operandHistory.count > 0 else { return }
+        let index = self.operandHistory.count
+
+        switch mathOperatorButton.currentTitle! {
+            case "+", "−", "×", "÷":
+                guard index >= 2 else { return }
+                self.displayHistoryLabel.text! += self.operandHistory[index - 3] + mathOperatorButton.currentTitle! + self.operandHistory[index - 2] + "=" + "\(self.customNumberFormatter.stringFromNumber(self.displayValue!)!), "
+            default:
+                self.displayHistoryLabel.text! += mathOperatorButton.currentTitle! + self.operandHistory[index - 2] + "=" + "\(self.customNumberFormatter.stringFromNumber(self.displayValue!)!), "
+        }
+        self.operandHistory = []
     }
 }
 

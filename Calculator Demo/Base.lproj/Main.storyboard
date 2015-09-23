@@ -181,9 +181,12 @@
                                     <action selector="enterButton" destination="BYZ-38-t0r" eventType="touchUpInside" id="9BX-nz-jUp"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WrX-tA-3J9">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WrX-tA-3J9">
                                 <rect key="frame" x="20" y="75" width="560" height="21"/>
                                 <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="qj8-uT-kzN"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -344,6 +347,7 @@
                     </view>
                     <connections>
                         <outlet property="clearButton" destination="grn-Ju-chk" id="ldV-rM-0qy"/>
+                        <outlet property="displayHistoryLabel" destination="WrX-tA-3J9" id="Uve-Ij-Xbg"/>
                         <outlet property="displayLabel" destination="HEB-q5-TlA" id="Deo-cW-dwR"/>
                         <outlet property="floatingPointButton" destination="RIU-SF-kc4" id="wHn-cd-v6x"/>
                     </connections>
