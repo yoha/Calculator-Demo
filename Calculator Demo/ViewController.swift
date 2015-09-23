@@ -24,8 +24,7 @@ class ViewController: UIViewController {
         self.floatingPointButton.enabled = false
         
         self.customNumberFormatter = NSNumberFormatter()
-        self.customNumberFormatter.minimumFractionDigits = 0
-        self.customNumberFormatter.maximumFractionDigits = 3
+        self.customNumberFormatter.maximumSignificantDigits = 4
     }
 
     override func didReceiveMemoryWarning() {
