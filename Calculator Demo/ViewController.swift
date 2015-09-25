@@ -42,7 +42,7 @@ class ViewController: UIViewController {
     
     var customNumberFormatter: NSNumberFormatter!
     
-    var operandHistory = [String]()
+    var calculationHistory = [String]()
     
     // MARK: - Computed Properties
     
@@ -56,7 +56,7 @@ class ViewController: UIViewController {
                 return
             }
             self.displayLabel.text = self.customNumberFormatter.stringFromNumber(NSNumber(double: newValue!))
-            self.operandHistory.append(self.displayLabel.text!)
+            self.calculationHistory.append(self.displayLabel.text!)
             self.isUserInTheMiddleOfTyping = false
         }
     }
@@ -104,9 +104,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func clearDisplayButton(sender: UIButton) {
-        self.displayValue = nil
-        self.isUserInTheMiddleOfTyping = false
-        self.floatingPointButton.enabled = false
+        self.clearDisplay()
     }
     
     @IBAction func deleteButton(sender: UIButton) {
@@ -132,7 +130,7 @@ class ViewController: UIViewController {
             if let evaluationResult = self.calculatorModel.pushOperator(mathOperator) {
                 self.displayValue = evaluationResult
             }
-            self.evalOperationForHistory(sender)
+            self.showPastCalculations(sender)
         }
         
     }
@@ -147,43 +145,52 @@ class ViewController: UIViewController {
         }
     }
     
+    func clearDisplay() {
+        self.floatingPointButton.enabled = false
+        self.displayValue = nil
+        self.displayHistoryLabel.text = ""
+        self.isUserInTheMiddleOfTyping = false
+    }
+    
     func deepCleanDisplayAndOpsStack(longPressGesture: UILongPressGestureRecognizer) {
         if longPressGesture.state == UIGestureRecognizerState.Began {
             let alertController = UIAlertController(title: "Erase display & memory?", message: nil, preferredStyle: .Alert)
             alertController.addAction(UIAlertAction(title: "Erase!", style: .Default, handler: { [unowned self] (alertAction) -> Void in
-                self.displayValue = nil
-                self.displayHistoryLabel.text = ""
                 self.calculatorModel.eraseOpsStack()
+                self.clearDisplay()
             }))
             alertController.addAction(UIAlertAction(title: "Don't erase!", style: .Cancel, handler: nil))
             self.presentViewController(alertController, animated: true, completion: nil)
         }
     }
     
-    func evalOperationForHistory(mathOperatorButton: UIButton) {
-        guard self.operandHistory.count > 0 else { return }
-        let index = self.operandHistory.count
+    @IBAction func inversePolarity(sender: UIButton) {
+        guard self.displayValue != 0 else { return }
+        self.displayValue! -= self.displayValue! * 2
+    }
+    
+    func showPastCalculations(mathOperatorButton: UIButton) {
+        print(self.calculationHistory)
+        guard self.calculationHistory.count > 0 else { return }
+        let index = self.calculationHistory.count
 
         switch mathOperatorButton.currentTitle! {
             case "+", "−", "×", "÷":
-                guard index >= 2 else { break }
-                self.displayHistoryLabel.text! += self.operandHistory[index - 3] + mathOperatorButton.currentTitle! + self.operandHistory[index - 2] + "=" + "\(self.customNumberFormatter.stringFromNumber(self.displayValue!)!), "
+                guard index >= 3 else { break }
+                self.displayHistoryLabel.text! += self.calculationHistory[index - 3] + mathOperatorButton.currentTitle! + self.calculationHistory[index - 2] + "=" + "\(self.customNumberFormatter.stringFromNumber(self.displayValue!)!), "
             case "sin", "cos", "tan", "√":
-                self.displayHistoryLabel.text! += mathOperatorButton.currentTitle! + self.operandHistory[index - 2] + "=" + "\(self.customNumberFormatter.stringFromNumber(self.displayValue!)!), "
+                guard index >= 2 else { break }
+                self.displayHistoryLabel.text! += mathOperatorButton.currentTitle! + self.calculationHistory[index - 2] + "=" + "\(self.customNumberFormatter.stringFromNumber(self.displayValue!)!), "
             case "π":
                 guard index > 1 else {
                     self.displayHistoryLabel.text! += mathOperatorButton.currentTitle!
                     break
                 }
-                self.displayHistoryLabel.text! += mathOperatorButton.currentTitle! + "x" + self.operandHistory[index - 2] + "=" + "\(self.customNumberFormatter.stringFromNumber(self.displayValue!)!), "
+                self.displayHistoryLabel.text! += mathOperatorButton.currentTitle! + "x" + self.calculationHistory[index - 2] + "=" + "\(self.customNumberFormatter.stringFromNumber(self.displayValue!)!), "
             default: break
         }
-        self.operandHistory = []
+        self.calculationHistory = []
     }
     
-    @IBAction func inversePolarity(sender: UIButton) {
-        guard self.displayValue != 0 else { return }
-        self.displayValue! -= self.displayValue! * 2
-    }
 }
 

@@ -34,13 +34,18 @@ class CalculatorModel {
     // MARK: - Public Initializer
     
     init() {
-        self.availableMathOperators["×"] = Op.BinaryOperation("×", { (operand1: Double, operand2: Double) -> Double in return operand2 * operand1 })
+        self.availableMathOperators["×"] = Op.BinaryOperation("×", { (operand1: Double, operand2: Double) -> Double in return operand2 * operand1
+        })
         self.availableMathOperators["÷"] = Op.BinaryOperation("÷", { (operand1, operand2) -> Double in operand2 / operand1 })
         self.availableMathOperators["+"] = Op.BinaryOperation("+", +)
         self.availableMathOperators["−"] = Op.BinaryOperation("−") {$1 - $0}
-        self.availableMathOperators["√"] = Op.UnaryOperation("√", sqrt)
-        self.availableMathOperators["sin"] = Op.UnaryOperation("sin", sin)
-        self.availableMathOperators["cos"] = Op.UnaryOperation("cos", cos)
+        self.availableMathOperators["√"] = Op.UnaryOperation("√", { (operand: Double) -> Double in
+            return sqrt(operand)
+        })
+        self.availableMathOperators["sin"] = Op.UnaryOperation("sin", { (operand) -> Double in
+            sin(operand)
+        })
+        self.availableMathOperators["cos"] = Op.UnaryOperation("cos") { cos($0) }
         self.availableMathOperators["tan"] = Op.UnaryOperation("tan", tan)
         self.availableMathOperators["π"] = Op.NullaryOperation("π") {M_PI}
     }
