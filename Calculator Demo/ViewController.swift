@@ -5,7 +5,8 @@
 //  Created by Yohannes Wijaya on 9/4/15.
 //  Copyright © 2015 Yohannes Wijaya. All rights reserved.
 //
-// to fix: the pie operation for the history label
+// to fix: 
+// 1. the pie operation for the history label.
 
 import UIKit
 
@@ -158,6 +159,7 @@ class ViewController: UIViewController {
             alertController.addAction(UIAlertAction(title: "Erase!", style: .Default, handler: { [unowned self] (alertAction) -> Void in
                 self.calculatorModel.eraseOpsStack()
                 self.clearDisplay()
+                self.calculationHistory = []
             }))
             alertController.addAction(UIAlertAction(title: "Don't erase!", style: .Cancel, handler: nil))
             self.presentViewController(alertController, animated: true, completion: nil)
@@ -189,7 +191,6 @@ class ViewController: UIViewController {
                 self.displayHistoryLabel.text! += mathOperatorButton.currentTitle! + "x" + self.calculationHistory[index - 2] + "=" + "\(self.customNumberFormatter.stringFromNumber(self.displayValue!)!), "
             default: break
         }
-        self.calculationHistory = []
     }
     
 }
