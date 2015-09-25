@@ -172,7 +172,6 @@ class ViewController: UIViewController {
     }
     
     func showPastCalculations(mathOperatorButton: UIButton) {
-        print(self.calculationHistory)
         guard self.calculationHistory.count > 0 else { return }
         let index = self.calculationHistory.count
 
@@ -182,13 +181,13 @@ class ViewController: UIViewController {
                 self.displayHistoryLabel.text! += self.calculationHistory[index - 3] + mathOperatorButton.currentTitle! + self.calculationHistory[index - 2] + "=" + "\(self.customNumberFormatter.stringFromNumber(self.displayValue!)!), "
             case "sin", "cos", "tan", "√":
                 guard index >= 2 else { break }
-                self.displayHistoryLabel.text! += mathOperatorButton.currentTitle! + self.calculationHistory[index - 2] + "=" + "\(self.customNumberFormatter.stringFromNumber(self.displayValue!)!), "
+                self.displayHistoryLabel.text! += mathOperatorButton.currentTitle! + self.calculationHistory[index - 2] + "=" + "\(self.displayValue!), "
             case "π":
                 guard index > 1 else {
                     self.displayHistoryLabel.text! += mathOperatorButton.currentTitle!
                     break
                 }
-                self.displayHistoryLabel.text! += mathOperatorButton.currentTitle! + "x" + self.calculationHistory[index - 2] + "=" + "\(self.customNumberFormatter.stringFromNumber(self.displayValue!)!), "
+                self.displayHistoryLabel.text! += mathOperatorButton.currentTitle! + "x" + self.calculationHistory[index - 2] + "=" + "\(self.displayValue!), "
             default: break
         }
     }
