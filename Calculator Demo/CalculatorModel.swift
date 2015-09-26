@@ -5,6 +5,7 @@
 //  Created by Yohannes Wijaya on 9/13/15.
 //  Copyright © 2015 Yohannes Wijaya. All rights reserved.
 //
+// todo: figure out how unaryOperation is able to process displayValue that isn't appended to the ops stack
 
 import Foundation
 
@@ -12,14 +13,12 @@ class CalculatorModel {
     
     private enum Op: CustomStringConvertible {
         case Operand(Double)
-        case NullaryOperation(String, () -> Double)
         case UnaryOperation(String, (Double) -> Double)
         case BinaryOperation(String, (Double, Double) -> Double)
         
         var description: String {
             switch self {
                 case .Operand(let operandValue): return "\(operandValue)"
-                case .NullaryOperation(let mathOperatorSymbol, _): return mathOperatorSymbol
                 case .UnaryOperation(let mathOperatorSymbol, _): return mathOperatorSymbol
                 case .BinaryOperation(let mathOperatorSymbol, _): return mathOperatorSymbol
             }
@@ -40,6 +39,7 @@ class CalculatorModel {
         self.availableMathOperators["+"] = Op.BinaryOperation("+", +)
         self.availableMathOperators["−"] = Op.BinaryOperation("−") {$1 - $0}
         self.availableMathOperators["√"] = Op.UnaryOperation("√", { (operand: Double) -> Double in
+//            print("operand1: \(operand)") // <---
             return sqrt(operand)
         })
         self.availableMathOperators["sin"] = Op.UnaryOperation("sin", { (operand) -> Double in
@@ -47,7 +47,6 @@ class CalculatorModel {
         })
         self.availableMathOperators["cos"] = Op.UnaryOperation("cos") { cos($0) }
         self.availableMathOperators["tan"] = Op.UnaryOperation("tan", tan)
-        self.availableMathOperators["π"] = Op.NullaryOperation("π") {M_PI}
     }
     
     // MARK: - Private Methods
@@ -58,12 +57,12 @@ class CalculatorModel {
             
             switch opAtTheTopOfTheStack {
             case .Operand(let anOperand):
+//                print("anOperand: \(anOperand)") // <---
                 return (anOperand, opsInStack)
-            case .NullaryOperation(_, let operation):
-                return (operation(), opsInStack)
             case .UnaryOperation(_, let operation):
                 let opToBeEvaluated = self.evaluateMembersOfTheStackRecursively(opsInStack)
                 if let operand = opToBeEvaluated.evaluationResult {
+//                    print("operand2: \(operand)") // <---
                     return (operation(operand), opToBeEvaluated.remainingOpsInStack)
                 }
             case .BinaryOperation(_, let operation):

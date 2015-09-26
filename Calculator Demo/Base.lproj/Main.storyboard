@@ -61,7 +61,7 @@
                                 <animations/>
                                 <state key="normal" title="π"/>
                                 <connections>
-                                    <action selector="performMathOperationButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="zbA-Mf-Akw"/>
+                                    <action selector="appendPieValue:" destination="BYZ-38-t0r" eventType="touchUpInside" id="FTr-Bv-Y8v"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CnJ-z1-rH5">

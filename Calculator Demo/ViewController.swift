@@ -6,7 +6,6 @@
 //  Copyright © 2015 Yohannes Wijaya. All rights reserved.
 //
 // to fix: 
-// 1. the pie operation for the history label.
 
 import UIKit
 
@@ -104,6 +103,12 @@ class ViewController: UIViewController {
         self.floatingPointButton.enabled = false
     }
     
+    @IBAction func appendPieValue(sender: UIButton) {
+        guard self.isUserInTheMiddleOfTyping == false else { return }
+        self.isUserInTheMiddleOfTyping = true
+        self.displayLabel.text = "3.142"
+    }
+    
     @IBAction func clearDisplayButton(sender: UIButton) {
         self.clearDisplay()
     }
@@ -186,12 +191,6 @@ class ViewController: UIViewController {
             case "sin", "cos", "tan", "√":
                 guard index >= 2 else { break }
                 self.displayHistoryLabel.text! += mathOperatorButton.currentTitle! + self.calculationHistory[index - 2] + "=" + "\(self.displayValue!), "
-            case "π":
-                guard index > 1 else {
-                    self.displayHistoryLabel.text! += mathOperatorButton.currentTitle!
-                    break
-                }
-                self.displayHistoryLabel.text! += mathOperatorButton.currentTitle! + "x" + self.calculationHistory[index - 2] + "=" + "\(self.displayValue!), "
             default: break
         }
     }
