@@ -5,7 +5,7 @@
 //  Created by Yohannes Wijaya on 9/4/15.
 //  Copyright © 2015 Yohannes Wijaya. All rights reserved.
 //
-// to fix: 
+// to fix:
 
 import UIKit
 
@@ -106,7 +106,7 @@ class ViewController: UIViewController {
     @IBAction func appendPieValue(sender: UIButton) {
         guard self.isUserInTheMiddleOfTyping == false else { return }
         self.isUserInTheMiddleOfTyping = true
-        self.displayLabel.text = "3.142"
+        self.displayLabel.text = self.customNumberFormatter.stringFromNumber(M_PI)
     }
     
     @IBAction func clearDisplayButton(sender: UIButton) {
