@@ -5,7 +5,6 @@
 //  Created by Yohannes Wijaya on 9/4/15.
 //  Copyright © 2015 Yohannes Wijaya. All rights reserved.
 //
-// to fix:
 
 import UIKit
 
@@ -48,7 +47,6 @@ class ViewController: UIViewController {
     
     var displayValue: Double? {
         get {
-            print("displayLabel " + self.displayLabel.text!) // <--
             return NSNumberFormatter().numberFromString(self.displayLabel.text!)!.doubleValue ?? nil
         }
         set {
@@ -139,11 +137,8 @@ class ViewController: UIViewController {
         self.piButton.enabled = true
         
         if sender.currentTitle == "√" {
-            print("displayValue \(self.displayValue!)") // <--
             guard self.displayValue! >= 0 else {
-                print(self.calculationHistory) // <--
                 self.calculationHistory.removeLast()
-                print(self.calculationHistory) // <--
                 sender.enabled = false
                 return
             }
@@ -202,10 +197,10 @@ class ViewController: UIViewController {
     
     @IBAction func inversePolarity(sender: UIButton) {
         self.piButton.enabled = true
-        guard self.displayValue != 0 else { return }
-        let convertednumber = Double(self.customNumberFormatter.numberFromString(self.displayLabel.text!)!)
-        self.displayValue = convertednumber - (convertednumber * 2)
-        print("displayvalue \(self.displayValue)") // <--
+        
+        let convertedNumber = Double(self.customNumberFormatter.numberFromString(self.displayLabel.text!)!)
+        let calculationResult = convertedNumber - (convertedNumber * 2)
+        self.displayLabel.text = self.customNumberFormatter.stringFromNumber(calculationResult)
     }
     
     func showPastCalculations(mathOperatorButton: UIButton) {
