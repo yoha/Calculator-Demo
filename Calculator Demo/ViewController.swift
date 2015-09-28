@@ -66,12 +66,12 @@ class ViewController: UIViewController {
     @IBOutlet weak var floatingPointButton: UIButton!
     @IBOutlet weak var clearButton: UIButton!
     @IBOutlet weak var displayHistoryLabel: UILabel!
-    @IBOutlet weak var piButton: UIButton!
+    @IBOutlet weak var squareRootButton: UIButton!
     
     // MARK: - IBAction Properties
     
     @IBAction func appendDigitButton(sender: UIButton) {
-        self.piButton.enabled = true
+        self.squareRootButton.enabled = true
         
         if isUserInTheMiddleOfTyping {
             if self.displayLabel.text!.characters.first == "0" {
@@ -106,7 +106,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func appendPieValue(sender: UIButton) {
-        self.piButton.enabled = true
+        self.squareRootButton.enabled = true
         guard self.isUserInTheMiddleOfTyping == false else { return }
         self.isUserInTheMiddleOfTyping = true
         self.displayLabel.text = self.customNumberFormatter.stringFromNumber(M_PI)
@@ -134,7 +134,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func performMathOperationButton(sender: UIButton) {
-        self.piButton.enabled = true
+        self.squareRootButton.enabled = true
         
         if sender.currentTitle == "√" {
             guard self.displayValue! >= 0 else {
@@ -196,7 +196,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func inversePolarity(sender: UIButton) {
-        self.piButton.enabled = true
+        self.squareRootButton.enabled = true
         
         let convertedNumber = Double(self.customNumberFormatter.numberFromString(self.displayLabel.text!)!)
         let calculationResult = convertedNumber - (convertedNumber * 2)
