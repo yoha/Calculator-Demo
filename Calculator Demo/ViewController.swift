@@ -48,6 +48,7 @@ class ViewController: UIViewController {
     
     var displayValue: Double? {
         get {
+            print("displayLabel " + self.displayLabel.text!) // <--
             return NSNumberFormatter().numberFromString(self.displayLabel.text!)!.doubleValue ?? nil
         }
         set {
@@ -67,10 +68,13 @@ class ViewController: UIViewController {
     @IBOutlet weak var floatingPointButton: UIButton!
     @IBOutlet weak var clearButton: UIButton!
     @IBOutlet weak var displayHistoryLabel: UILabel!
+    @IBOutlet weak var piButton: UIButton!
     
     // MARK: - IBAction Properties
     
     @IBAction func appendDigitButton(sender: UIButton) {
+        self.piButton.enabled = true
+        
         if isUserInTheMiddleOfTyping {
             if self.displayLabel.text!.characters.first == "0" {
                 if sender.currentTitle == "0" && self.displayLabel.text!.characters.contains(".") || self.displayLabel.text!.characters.contains("."){
@@ -104,6 +108,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func appendPieValue(sender: UIButton) {
+        self.piButton.enabled = true
         guard self.isUserInTheMiddleOfTyping == false else { return }
         self.isUserInTheMiddleOfTyping = true
         self.displayLabel.text = self.customNumberFormatter.stringFromNumber(M_PI)
@@ -131,14 +136,34 @@ class ViewController: UIViewController {
     }
     
     @IBAction func performMathOperationButton(sender: UIButton) {
-        if self.isUserInTheMiddleOfTyping { self.enterButton() }
-        if let mathOperator = sender.currentTitle {
-            if let evaluationResult = self.calculatorModel.pushOperator(mathOperator) {
-                self.displayValue = evaluationResult
-            }
-            self.showPastCalculations(sender)
-        }
+        self.piButton.enabled = true
         
+        if sender.currentTitle == "√" {
+            print("displayValue \(self.displayValue!)") // <--
+            guard self.displayValue! >= 0 else {
+                print(self.calculationHistory) // <--
+                self.calculationHistory.removeLast()
+                print(self.calculationHistory) // <--
+                sender.enabled = false
+                return
+            }
+            self.enterButton()
+            if let mathOperator = sender.currentTitle {
+                if let evaluationResult = self.calculatorModel.pushOperator(mathOperator) {
+                    self.displayValue = evaluationResult
+                }
+                self.showPastCalculations(sender)
+            }
+        }
+        else {
+            if self.isUserInTheMiddleOfTyping { self.enterButton() }
+            if let mathOperator = sender.currentTitle {
+                if let evaluationResult = self.calculatorModel.pushOperator(mathOperator) {
+                    self.displayValue = evaluationResult
+                }
+                self.showPastCalculations(sender)
+            }
+        }
     }
     
     // MARK: - Local Methods
@@ -176,8 +201,11 @@ class ViewController: UIViewController {
     }
     
     @IBAction func inversePolarity(sender: UIButton) {
+        self.piButton.enabled = true
         guard self.displayValue != 0 else { return }
-        self.displayValue! -= self.displayValue! * 2
+        let convertednumber = Double(self.customNumberFormatter.numberFromString(self.displayLabel.text!)!)
+        self.displayValue = convertednumber - (convertednumber * 2)
+        print("displayvalue \(self.displayValue)") // <--
     }
     
     func showPastCalculations(mathOperatorButton: UIButton) {

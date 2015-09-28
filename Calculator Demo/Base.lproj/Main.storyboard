@@ -356,6 +356,7 @@
                         <outlet property="displayHistoryLabel" destination="WrX-tA-3J9" id="Uve-Ij-Xbg"/>
                         <outlet property="displayLabel" destination="HEB-q5-TlA" id="Deo-cW-dwR"/>
                         <outlet property="floatingPointButton" destination="RIU-SF-kc4" id="wHn-cd-v6x"/>
+                        <outlet property="piButton" destination="Fe9-3Y-zYn" id="Z3Z-v2-GG3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
