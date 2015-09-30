@@ -23,7 +23,7 @@ class ViewController: UIViewController {
         self.floatingPointButton.enabled = false
         
         self.customNumberFormatter = NSNumberFormatter()
-        self.customNumberFormatter.maximumSignificantDigits = 4
+        self.customNumberFormatter.maximumSignificantDigits = 10
     }
 
     override func didReceiveMemoryWarning() {
@@ -134,6 +134,14 @@ class ViewController: UIViewController {
         }
     }
     
+    @IBAction func inversePolarity(sender: UIButton) {
+        self.squareRootButton.enabled = true
+        
+        let convertedNumber = Double(self.customNumberFormatter.numberFromString(self.displayLabel.text!)!)
+        let calculationResult = convertedNumber - (convertedNumber * 2)
+        self.displayLabel.text = self.customNumberFormatter.stringFromNumber(calculationResult)
+    }
+
     @IBAction func performMathOperationButton(sender: UIButton) {
         self.squareRootButton.enabled = true
         
@@ -160,6 +168,7 @@ class ViewController: UIViewController {
         }
     }
     
+
     // MARK: - Local Methods
     
     func alertAboutDeepCleanOnce() {
@@ -192,14 +201,6 @@ class ViewController: UIViewController {
             alertController.addAction(UIAlertAction(title: "Don't erase!", style: .Cancel, handler: nil))
             self.presentViewController(alertController, animated: true, completion: nil)
         }
-    }
-    
-    @IBAction func inversePolarity(sender: UIButton) {
-        self.squareRootButton.enabled = true
-        
-        let convertedNumber = Double(self.customNumberFormatter.numberFromString(self.displayLabel.text!)!)
-        let calculationResult = convertedNumber - (convertedNumber * 2)
-        self.displayLabel.text = self.customNumberFormatter.stringFromNumber(calculationResult)
     }
     
     func showPastCalculations(mathOperatorButton: UIButton) {
