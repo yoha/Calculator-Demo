@@ -105,7 +105,7 @@ class ViewController: UIViewController {
         self.floatingPointButton.enabled = false
     }
     
-    @IBAction func appendPieValue(sender: UIButton) {
+    @IBAction func appendPiValue(sender: UIButton) {
         self.squareRootButton.enabled = true
         guard self.isUserInTheMiddleOfTyping == false else { return }
         self.isUserInTheMiddleOfTyping = true
@@ -136,23 +136,21 @@ class ViewController: UIViewController {
     @IBAction func performMathOperationButton(sender: UIButton) {
         self.squareRootButton.enabled = true
         
-        if sender.currentTitle == "√" {
-            guard self.displayValue! >= 0 else {
-                self.calculationHistory.removeLast()
-                sender.enabled = false
-                return
-            }
-            self.enterButton()
-            if let mathOperator = sender.currentTitle {
+        if let mathOperator = sender.currentTitle {
+            if mathOperator == "√" {
+                guard self.displayValue! >= 0 else {
+                    self.calculationHistory.removeLast()
+                    sender.enabled = false
+                    return
+                }
+                self.enterButton()
                 if let evaluationResult = self.calculatorModel.pushOperator(mathOperator) {
                     self.displayValue = evaluationResult
                 }
                 self.showPastCalculations(sender)
             }
-        }
-        else {
-            if self.isUserInTheMiddleOfTyping { self.enterButton() }
-            if let mathOperator = sender.currentTitle {
+            else {
+                if self.isUserInTheMiddleOfTyping { self.enterButton() }
                 if let evaluationResult = self.calculatorModel.pushOperator(mathOperator) {
                     self.displayValue = evaluationResult
                 }
