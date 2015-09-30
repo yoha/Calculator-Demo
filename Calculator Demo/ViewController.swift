@@ -148,6 +148,10 @@ class ViewController: UIViewController {
         if let mathOperator = sender.currentTitle {
             if mathOperator == "√" {
                 guard self.displayValue! >= 0 else {
+                    guard self.calculationHistory.count > 0 else {
+                        self.squareRootButton.enabled = false
+                        return
+                    }
                     self.calculationHistory.removeLast()
                     sender.enabled = false
                     return
