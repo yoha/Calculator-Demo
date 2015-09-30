@@ -120,6 +120,7 @@ class ViewController: UIViewController {
         guard self.displayLabel.text!.characters.count > 1 else {
             self.displayValue = nil
             self.isUserInTheMiddleOfTyping = false
+            self.floatingPointButton.enabled = false
             return
         }
         self.displayLabel.text = String(self.displayLabel.text!.characters.dropLast())
