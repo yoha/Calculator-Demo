@@ -5,7 +5,7 @@
 //  Created by Yohannes Wijaya on 9/13/15.
 //  Copyright © 2015 Yohannes Wijaya. All rights reserved.
 //
-// todo: figure out how unaryOperation is able to process displayValue that isn't appended to the ops stack
+// TODO: figure out how unaryOperation is able to process displayValue that isn't appended to the ops stack
 
 import Foundation
 
