@@ -11,8 +11,6 @@ import UIKit
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
-        super.viewDidLoad()
-        
         self.tapGestureToNotifyDeepCleanOnce = UITapGestureRecognizer(target: self, action: "alertAboutDeepCleanOnce")
         self.clearButton.addGestureRecognizer(tapGestureToNotifyDeepCleanOnce)
         
@@ -24,6 +22,8 @@ class ViewController: UIViewController {
         
         self.customNumberFormatter = NSNumberFormatter()
         self.customNumberFormatter.maximumSignificantDigits = 10
+        
+        super.viewDidLoad()
     }
 
     override func didReceiveMemoryWarning() {
