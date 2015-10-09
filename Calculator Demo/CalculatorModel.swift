@@ -30,6 +30,35 @@ class CalculatorModel {
     private var operandOrOperatorStack = [Op]()
     private var availableMathOperators = [String: Op]()
     
+    // MARK: - Computed Properties
+    
+    /*** guaranteed to be a Property List ***/
+    var program: AnyObject {
+        get {
+            // option 1
+            return self.operandOrOperatorStack.map { $0.description }
+            // option 2
+//            var returnValue = Array<String>()
+//            for op in self.operandOrOperatorStack {
+//                returnValue.append(op.description)
+//            }
+//            return returnValue
+        }
+        set {
+            guard let arrayOfOps = newValue as? Array<String> else { return }
+            var newOperandOrOperatorStack = Array<Op>()
+            for eachOp in arrayOfOps {
+                if let op = self.availableMathOperators[eachOp] {
+                    newOperandOrOperatorStack.append(op)
+                }
+                else if let operand = NSNumberFormatter().numberFromString(eachOp)?.doubleValue {
+                    newOperandOrOperatorStack.append(.Operand(operand))
+                }
+            }
+            self.operandOrOperatorStack = newOperandOrOperatorStack
+        }
+    }
+    
     // MARK: - Public Initializer
     
     init() {
