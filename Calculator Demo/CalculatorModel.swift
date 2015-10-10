@@ -32,8 +32,9 @@ class CalculatorModel {
     
     // MARK: - Computed Properties
     
-    /*** guaranteed to be a Property List ***/
-    var program: AnyObject {
+    /*** a Property List to be passed to NSUserDefaults if needed ***/
+    typealias PropertyList = AnyObject
+    var program: PropertyList {
         get {
             // option 1
             return self.operandOrOperatorStack.map { $0.description }
