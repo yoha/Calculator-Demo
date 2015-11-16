@@ -47,7 +47,8 @@ class ViewController: UIViewController {
     
     var displayValue: Double? {
         get {
-            return NSNumberFormatter().numberFromString(self.displayLabel.text!)!.doubleValue ?? nil
+            guard let selfDisplayLabelText = self.displayLabel.text else { return nil }
+            return NSNumberFormatter().numberFromString(selfDisplayLabelText)!.doubleValue ?? nil
         }
         set {
             guard newValue != nil else {

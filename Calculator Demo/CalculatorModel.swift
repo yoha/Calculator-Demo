@@ -39,11 +39,13 @@ class CalculatorModel {
             // option 1
             return self.operandOrOperatorStack.map { $0.description }
             // option 2
-//            var returnValue = Array<String>()
-//            for op in self.operandOrOperatorStack {
-//                returnValue.append(op.description)
-//            }
-//            return returnValue
+            /***
+            var returnValue = Array<String>()
+            for op in self.operandOrOperatorStack {
+                returnValue.append(op.description)
+            }
+            return returnValue
+            ***/
         }
         set {
             guard let arrayOfOps = newValue as? Array<String> else { return }
