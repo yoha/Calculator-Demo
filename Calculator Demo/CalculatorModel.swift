@@ -13,12 +13,14 @@ class CalculatorModel {
     
     private enum Op: CustomStringConvertible {
         case Operand(Double)
+        case Variable(String)
         case UnaryOperation(String, (Double) -> Double)
         case BinaryOperation(String, (Double, Double) -> Double)
         
         var description: String {
             switch self {
                 case .Operand(let operandValue): return "\(operandValue)"
+                case .Variable(let variable): return variable
                 case .UnaryOperation(let mathOperatorSymbol, _): return mathOperatorSymbol
                 case .BinaryOperation(let mathOperatorSymbol, _): return mathOperatorSymbol
             }
@@ -29,6 +31,7 @@ class CalculatorModel {
     
     private var operandOrOperatorStack = [Op]()
     private var availableMathOperators = [String: Op]()
+    private var variableValues = [String: Double]()
     
     // MARK: - Computed Properties
     
@@ -91,6 +94,8 @@ class CalculatorModel {
             case .Operand(let anOperand):
 //                print("anOperand: \(anOperand)") // <---
                 return (anOperand, opsInStack)
+            case .Variable(_):
+                return(nil, opsInStack)
             case .UnaryOperation(_, let operation):
                 let opToBeEvaluated = self.evaluateMembersOfTheStackRecursively(opsInStack)
                 if let operand = opToBeEvaluated.evaluationResult {
@@ -122,6 +127,11 @@ class CalculatorModel {
         let (evaluationResult, remainingOpsInStack) = self.evaluateMembersOfTheStackRecursively(self.operandOrOperatorStack)
         print("\(self.operandOrOperatorStack) = \(evaluationResult) with \(remainingOpsInStack) remaining")
         return evaluationResult
+    }
+    
+    func pushOperand(variable: String) -> Double? {
+        self.operandOrOperatorStack.append(Op.Variable(variable))
+        return self.performEvaluation()
     }
     
     func pushOperand(operand: Double) -> Double? {
